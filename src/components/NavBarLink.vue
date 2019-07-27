@@ -1,24 +1,38 @@
 <template>
   <div class="navbar-link">
-      <a href="#"><slot></slot></a>
+    <a :class="{ isSelected: isCurrentRoute }" href="#">
+      <slot></slot>
+    </a>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'NavBarLink'
+  name: 'NavBarLink',
+  props: {
+    routeName: String
+  },
+  computed: {
+    isCurrentRoute() {
+      return this.$route && this.routeName == this.$route.name
+    }
+  }
 }
 </script>
 
 <style scoped>
-.navbar-link{
-  display:inline-block;
+.navbar-link {
+  display: inline-block;
 }
-.navbar-link > a{  
+.navbar-link > a {
   font-size: 16px;
   line-height: 19px;
   text-decoration: none;
-  color: #FFFFFF;
+  color: #ffffff;
   margin: 0 16px;
+}
+.navbar-link > a.isSelected {
+  border-bottom: #ffffff solid 2px;
+  padding-bottom: 8px;
 }
 </style>

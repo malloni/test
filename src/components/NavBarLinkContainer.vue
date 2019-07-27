@@ -1,6 +1,6 @@
 <template>
   <div class="navbar-link-container">
-      <slot></slot>
+    <slot></slot>
   </div>
 </template>
 
@@ -11,8 +11,8 @@ export default {
 </script>
 
 <style scoped>
-.navbar-link-container{  
-  display:flex;
+.navbar-link-container {
+  display: flex;
   flex-wrap: nowrap;
   justify-content: flex-end;
   align-items: center;

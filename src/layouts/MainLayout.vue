@@ -1,7 +1,7 @@
 <template>
   <div id="main-layout">
-      <nav-bar></nav-bar>
-      <slot></slot>
+    <nav-bar></nav-bar>
+    <slot></slot>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style scoped>
-#main-layout{
-    margin-top: 100px;
+#main-layout {
+  margin-top: 100px;
 }
 </style>
