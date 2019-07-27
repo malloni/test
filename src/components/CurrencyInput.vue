@@ -5,11 +5,12 @@
         class="value"
         type="text"
         :value="value.value"
-        @input="changeValue($event.target.value, value.currency)"
-        @blur="onInputBlur"
         :disabled="isDisable"
+        @input="changeValue($event.target.value, value.currency)"
+        @blur="formatCurrentValue"
+        @keypress="filter"
       >
-      
+
       <span class="separator"></span>
 
       <span v-if="isDisable" class="currency disabled">{{value.currency}}</span>
@@ -19,8 +20,7 @@
         :value="value.currency"
         @input="changeValue(value.value, $event.target.value)"
       >
-        <option>BRL</option>
-        <option>USD</option>
+        <option v-for="(value, index) in currencyOptions" :key="index" :value="value">{{value}}</option>
       </select>
     </div>
   </div>
@@ -38,10 +38,14 @@ export default {
     value: {
       required: true,
       type: Object
+    },
+    currencyOptions: {
+      required: true,
+      type: Array
     }
   },
   mounted() {
-    this.onInputBlur();
+    this.formatCurrentValue();
   },
   methods: {
     /**
@@ -49,19 +53,26 @@ export default {
      * the new value will not be updated if is NaN
      */
     changeValue(newValue, newCurrency) {
-      if (isNaN(newValue)) {
-        newValue = this.value.value
-      }
-
       this.$emit('input', { value: newValue, currency: newCurrency })
     },
     /**
-     * Format current value on input blur
+     * Format current value to fixed 2
      */
-    onInputBlur() {
+    formatCurrentValue() {
       let floatValue = parseFloat(this.value.value)
       if (!isNaN(floatValue)) {
         this.changeValue(floatValue.toFixed(2), this.value.currency)
+      }
+    },
+    /**
+     * Get the current pressed key and check if new value
+     * is a valid decimal. 
+     */
+    filter(event) {
+      let newValue = this.value.value + event.key
+      let validNumber = /^\d+(\.|,)?\d*(?!\S)$/g
+      if (!validNumber.test(newValue)) {
+        event.preventDefault()
       }
     }
   }

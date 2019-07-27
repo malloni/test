@@ -1,51 +1,39 @@
 <template>
   <div>
-    <currency-input v-model="currentValue"></currency-input>
-    <currency-input v-model="price" :isDisable="true"></currency-input>
+    <currency-input v-model="currentValue" :currency-options="currencies"></currency-input>
+    <currency-input :value="convertedValue" :currency-options="currencies" :isDisable="true"></currency-input>
   </div>
 </template>
 
 <script>
 import CurrencyInput from './CurrencyInput.vue'
-import Axios from 'axios'
-const baseURL = 'https://economia.awesomeapi.com.br/'
-const timeout = 10000
+import { mapActions, mapMutations, mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'CompareCurrencyInput',
-  data() {
-    return {
-      bid: 0,
-      currencies: ['BRL', 'USD'],
-      currentValue: {
-        value: 100.00,
-        currency: 'BRL'
-      }
-    }
-  },
   computed: {
-    price() {
-      if (this.currentValue.currency === 'BRL')
-        return {
-          value: (this.currentValue.value * this.bid).toFixed(2),
-          currency: 'USD'
-        }
-      else
-        return {
-          value: (this.currentValue.value / this.bid).toFixed(2),
-          currency: 'BRL'
-        }
-    }
+    currentValue: {
+      get() {
+        return this.$store.state.currentValue
+      },
+      set(value) {
+        this.updateCurrentValue(value)
+      }
+    },
+    ...mapGetters([
+      'convertedValue'
+    ]),
+    ...mapState({
+      currencies: state => state.currencies,
+      bid: state => state.bid
+    })
   },
   mounted() {
-    let http = Axios.create({ baseURL, timeout })
-    http.request({
-      method: 'get',
-      url: 'all/USD-BRL'
-    }).then(response => {
-      this.bid = parseFloat(response.data.USD.bid.replace(',', '.'))
-      console.log(this.bid)
-    })
+    this.updateBidAsync()
+  },
+  methods: {
+    ...mapActions(['updateBidAsync']),
+    ...mapMutations(['updateCurrentValue'])
   },
   components: { CurrencyInput }
 }
