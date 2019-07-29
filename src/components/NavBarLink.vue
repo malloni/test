@@ -1,8 +1,8 @@
 <template>
   <div class="navbar-link">
-    <a :class="{ isSelected: isCurrentRoute }" href="#">
+    <router-link class="link" :to="toName">
       <slot></slot>
-    </a>
+    </router-link>
   </div>
 </template>
 
@@ -10,11 +10,10 @@
 export default {
   name: 'NavBarLink',
   props: {
-    routeName: String
-  },
-  computed: {
-    isCurrentRoute() {
-      return this.$route && this.routeName == this.$route.name
+    routeName: String,
+    toName: {
+      type: String,
+      default: '/'
     }
   }
 }
@@ -24,14 +23,14 @@ export default {
 .navbar-link {
   display: inline-block;
 }
-.navbar-link > a {
+.navbar-link > .link {
   font-size: 16px;
   line-height: 19px;
   text-decoration: none;
   color: #ffffff;
   margin: 0 16px;
 }
-.navbar-link > a.isSelected {
+.navbar-link > .link.router-link-exact-active {
   border-bottom: #ffffff solid 2px;
   padding-bottom: 8px;
 }

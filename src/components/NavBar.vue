@@ -5,7 +5,7 @@
 
       <nav-bar-link-container>
         <nav-bar-link>BleuTest Buy</nav-bar-link>
-        <nav-bar-link :route-name="'compare'">Compare</nav-bar-link>
+        <nav-bar-link :route-name="'compare'" :to-name="'compare'">Compare</nav-bar-link>
         <nav-bar-link>Remittance</nav-bar-link>
         <nav-bar-link>Exchanges</nav-bar-link>
         <nav-bar-link>Exchanges' Fees</nav-bar-link>

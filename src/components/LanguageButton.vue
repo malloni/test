@@ -1,14 +1,40 @@
 <template>
-  <button class="language-button">
-    <img alt="brazil flag" src="../assets/flag-brazil.svg">
-    <span>BRL</span>
-    <img alt="arrow down" src="../assets/icon-arrow-down.png">
-  </button>
+  <div>
+    <bl-select v-model="selectedLanguage" :has-icon="true">
+      <bl-select-option
+        v-for="(value, index) in languageOptions"
+        :key="index"
+        :value="value"
+      >{{value.label}}</bl-select-option>
+    </bl-select>
+  </div>
 </template>
 
 <script>
+import BlSelect from './BleuSelect.vue'
+import BlSelectOption from './BleuSelectOption.vue'
+
 export default {
   name: 'LanguageButton',
+  data() {
+    return {
+      languageOptions: [
+        {
+          label: 'BRL',
+          icon: 'flag-brazil.svg'
+        },
+        {
+          label: 'EUA',
+          icon: 'flag-brazil-inverse.svg'
+        }
+      ],
+      selectedLanguage: {
+        label: 'BRL',
+        icon: 'flag-brazil.svg'
+      }
+    }
+  },
+  components: { BlSelect, BlSelectOption }
 }
 </script>
 
@@ -23,9 +49,5 @@ export default {
   background: none;
   justify-content: center;
   align-items: center;
-}
-
-.language-button > span {
-  margin: 0 6px;
 }
 </style>

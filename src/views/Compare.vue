@@ -19,7 +19,7 @@ import MainLayout from '@/layouts/MainLayout.vue'
 import CompareCurrencyInput from '@/components/CompareCurrencyInput.vue'
 
 export default {
-  name: '',
+  name: 'Compare',
   props: {
     msg: String
   },

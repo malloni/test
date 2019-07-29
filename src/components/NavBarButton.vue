@@ -1,20 +1,17 @@
 <template>
-  <button class="b-navbar-button">
+  <button class="navbar-button">
     <slot></slot>
   </button>
 </template>
 
 <script>
 export default {
-  name: '',
-  props: {
-    msg: String
-  }
+  name: 'NavbarButton'
 }
 </script>
 
 <style scoped>
-.b-navbar-button {
+.navbar-button {
   display: inline-block;
   padding: 10px 15px;
   border: 2px solid #ffffff;
